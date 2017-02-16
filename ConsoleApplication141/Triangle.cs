@@ -9,17 +9,44 @@ namespace ConsoleApplication141
     class Triangle
     {
         double p;
+        Edge a, b, c;
 
-        double x1, x2, x3, y1, y2, y3; 
+        public Triangle(Edge a, Edge b, Edge c)
+        {
+            this.a = a;
+            this.b = b;
+            this.c = c;
 
+            if ((a.p2.x - a.p1.x) * (b.p2.y - c.p2.y) - (b.p2.y - a.p2.y) * (c.p2.x - a.p1.x) == 0)
+            {
+                Console.WriteLine("Error!!!");
+                System.Environment.Exit(0);
+            }
 
+            if (a >= b + c && b >= a + c && c >= a + b)
+            {
+                Console.WriteLine("Error!!!");
+                System.Environment.Exit(0);
+            }
+        }
+        public Triangle(double x1, double x2, double x3, double y1, double y2, double y3)
+        {
+            Point p1 = new Point(x1, y1);
+            Point p2 = new Point(x2, y2);
+            Point p3 = new Point(x3, y3);
+
+            a = new Edge(p1, p2);
+            b = new Edge(p2, p3);
+            c = new Edge(p3, p1);
+        }
+        
         ~Triangle();
 
         public double Perimeter
         {
             get
             {
-                return Edge.a + Edge.b + Edge.c;
+                return a + b + c;
             }
         }
 
@@ -27,8 +54,8 @@ namespace ConsoleApplication141
         {
             get
             {
-                p = Edge.a + Edge.b + Edge.c;
-                return Math.Sqrt(p * (p - Edge.a) * (p - Edge.b) * (p - Edge.c));
+                p = a + b + c;
+                return Math.Sqrt(p * (p - a) * (p - b) * (p - c));
             }
         }
 
@@ -37,9 +64,9 @@ namespace ConsoleApplication141
             get
             {
                 if (
-                    (Edge.a > Edge.b && Edge.a > Edge.c && (Edge.b * Edge.b + Edge.c * Edge.c) == Edge.a * Edge.a) || 
-                    (Edge.b > Edge.a && Edge.b > Edge.c && (Edge.a * Edge.a + Edge.c * Edge.c) == Edge.b * Edge.b) || 
-                    (Edge.c > Edge.a && Edge.c > Edge.b && (Edge.b * Edge.b + Edge.a * Edge.a) == Edge.c * Edge.c)
+                    (a > b && a > c && (b * b + c * c) == a * a) || 
+                    (b > a && b > c && (a * a + c * c) == b * b) || 
+                    (c > a && c > b && (b * b + a * a) == c * c)
                     )
                 {
                     return true;
@@ -55,7 +82,7 @@ namespace ConsoleApplication141
         {
             get
             {
-                if (Edge.a == Edge.b || Edge.a == Edge.c || Edge.b == Edge.c)
+                if (a == b || a == c || b == c)
                 {
                     return true;
                 }
@@ -64,7 +91,6 @@ namespace ConsoleApplication141
                     return false;
                 }
             }
-        }
-
+        }      
     }
 }

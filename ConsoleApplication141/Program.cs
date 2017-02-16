@@ -10,16 +10,11 @@ namespace ConsoleApplication141
     {
         static void Main(string[] args)
         {
-            var triangle = new Edge(5, 4, 5);
-            double perimeter = triangle.Perimeter;
-            double area = triangle.Area;
-
-
-            List<Point> objArray = new List<Point>();
-            objArray.Add(new Point(3, 4, 5, 1, 4, 6));
-            objArray.Add(new Point(7, 4, 5, 3, 4, 5));
-            objArray.Add(new Point(3, 4, 5, 6, 9, 2));
-            objArray.Add(new Point(3, 4, 7, 5, 6, 6));
+            List<Triangle> objArray = new List<Triangle>();
+            objArray.Add(new Triangle(3, 4, 5, 1, 4, 6));
+            objArray.Add(new Triangle(7, 4, 5, 3, 4, 5));
+            objArray.Add(new Triangle(3, 4, 5, 6, 9, 2));
+            objArray.Add(new Triangle(3, 4, 7, 5, 6, 6));
 
             double MiddlePerimeter = 0;
             foreach (Triangle i in objArray)
