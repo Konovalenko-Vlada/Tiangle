@@ -10,43 +10,29 @@ namespace ConsoleApplication141
     {
         double p;
         Edge a, b, c;
+        public Point P1, P2, P3;
 
-        public Triangle(Edge a, Edge b, Edge c)
+        public Triangle(Point p1, Point p2, Point p3)
         {
-            this.a = a;
-            this.b = b;
-            this.c = c;
-
-            if ((a.p2.x - a.p1.x) * (b.p2.y - c.p2.y) - (b.p2.y - a.p2.y) * (c.p2.x - a.p1.x) == 0)
-            {
-                Console.WriteLine("Error!!!");
-                System.Environment.Exit(0);
-            }
-
-            if (a >= b + c && b >= a + c && c >= a + b)
-            {
-                Console.WriteLine("Error!!!");
-                System.Environment.Exit(0);
-            }
-        }
-        public Triangle(double x1, double x2, double x3, double y1, double y2, double y3)
-        {
-            Point p1 = new Point(x1, y1);
-            Point p2 = new Point(x2, y2);
-            Point p3 = new Point(x3, y3);
+            P1 = p1;
+            P2 = p2;
+            P3 = p3;
 
             a = new Edge(p1, p2);
             b = new Edge(p2, p3);
             c = new Edge(p3, p1);
+
+            if (a.Length >= b.Length + c.Length && b.Length >= a.Length + c.Length && c.Length >= a.Length + b.Length)
+            {
+                throw new ArgumentException("Error Edge");
+            }
         }
-        
-        ~Triangle();
 
         public double Perimeter
         {
             get
             {
-                return a + b + c;
+                return a.Length + b.Length + c.Length;
             }
         }
 
@@ -54,8 +40,8 @@ namespace ConsoleApplication141
         {
             get
             {
-                p = a + b + c;
-                return Math.Sqrt(p * (p - a) * (p - b) * (p - c));
+                p = a.Length + b.Length + c.Length;
+                return Math.Sqrt(p * (p - a.Length) * (p - b.Length) * (p - c.Length)) / 2;
             }
         }
 
@@ -63,18 +49,11 @@ namespace ConsoleApplication141
         {
             get
             {
-                if (
-                    (a > b && a > c && (b * b + c * c) == a * a) || 
-                    (b > a && b > c && (a * a + c * c) == b * b) || 
-                    (c > a && c > b && (b * b + a * a) == c * c)
-                    )
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return (
+                        (a.Length > b.Length && a.Length > c.Length && (b.Length * b.Length + c.Length * c.Length) == a.Length * a.Length) ||
+                        (b.Length > a.Length && b.Length > c.Length && (a.Length * a.Length + c.Length * c.Length) == b.Length * b.Length) ||
+                        (c.Length > a.Length && c.Length > b.Length && (b.Length * b.Length + a.Length * a.Length) == c.Length * c.Length)
+                        );                
             }
         }
 
@@ -82,15 +61,24 @@ namespace ConsoleApplication141
         {
             get
             {
-                if (a == b || a == c || b == c)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return (a == b || a == c || b == c);
             }
-        }      
-    }
+        }
+
+        public static Boolean operator ==(Point r1, Point r2)
+        {
+            if (r1.X == r2.X && r1.Y == r2.Y)
+                return true;
+            else
+                return false;
+        }
+
+        public static Boolean operator !=(Point r1, Point r2)
+        {
+            if (r1.X != r2.X || r1.Y != r2.Y)
+                return true;
+            else
+                return false;
+        }
+    }      
 }
